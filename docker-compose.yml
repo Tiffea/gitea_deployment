@@ -1,0 +1,26 @@
+services:
+  app:
+    image: gitea/gitea:latest
+    #image from docker hub
+    ports:
+      - "3000:3000"
+    enviroment: giteaDB:postgresql@123@db:5432/gitea
+    depends_on:
+      - db
+      #meaning bd will be turned on first - then this service
+  db:
+    environment:
+      - POSTGRES_USER=giteaDB
+      #user to log in postgres
+      - POSTGRES_PASSWORD=postgresql@123
+      #password to log in postgres
+      - POSTGRES_DB=gitea
+      #create a bd called gitea in the volume
+    image: postgres:16
+    #use this image from dockerhub
+    volumes:
+      - postgresql:/var/lib/postgresql/data
+
+volumes:
+  postgresql:
+  #!! vlolumes stays at the same level of indentation as services
