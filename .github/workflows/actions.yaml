@@ -1,0 +1,23 @@
+name: "Actions for demo branch"
+
+on: #trigger for actions
+  push:
+    branches:
+      - demo
+
+jobs:
+#1 step - checkout so ubuntu knows that to work with
+  test: #created name -> modules -> parameters
+    runs-on: ubuntu-latest
+
+
+    steps:
+      - name: deliver code to a machine
+        uses: actions/checkout@v4
+      
+      - name: sync with dockerhub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
