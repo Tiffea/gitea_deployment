@@ -1,0 +1,50 @@
+---
+- name: setup gitea on a server
+  hosts: gitea_server 
+  become: true #sudo rights
+
+  tasks:
+    - name: Apt install packages
+      apt:
+        update_cache: yes
+        # we update cache so you don't need to write "update_cache: yes" for all the apps
+
+    - name: check docker status
+      command: docker --version
+      register: status
+      ignore_errors: yes
+
+    - name: install docker
+      apt:
+        name: docker.io
+        state: present #verify that the programm is installed
+      when: status.failed
+      # checks if docker installed, if not - installs it
+
+    - name: add host to docker group
+      user:
+        name: ubuntu
+        groups: docker
+        append: yes
+
+    - name: install docker-compose (v1)
+      apt:
+        name: docker-compose
+        state: present
+
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: clone repository #warning you must have an actual version on main branch
+      git:
+        repo: https://github.com/tiffea/gitea_deployment.git
+        dest: /home/ubuntu/gitea_project
+        version: demo
+        update: yes
+    
+    - name: container up
+      command: docker-compose up -d #what to do
+      args: #where
+        chdir: /home/ubuntu/gitea_deployment
