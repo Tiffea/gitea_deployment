@@ -45,6 +45,6 @@
         update: yes
     
     - name: container up
-      command: docker-compose up -d #what to do
+      command: docker compose up -d #what to do
       args: #where
         chdir: /home/ubuntu/gitea_deployment
