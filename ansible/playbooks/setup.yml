@@ -12,7 +12,7 @@
     - name: check docker status
       command: docker --version
       register: status
-      ignore_errors: yes
+      ignore_errors: true
 
     - name: install docker
       apt:
@@ -27,14 +27,11 @@
         groups: docker
         append: yes
 
+
+
     - name: install docker-compose (v1)
       apt:
         name: docker-compose
-        state: present
-
-    - name: Install nginx
-      apt:
-        name: nginx
         state: present
 
     - name: clone repository #warning you must have an actual version on main branch
@@ -43,8 +40,29 @@
         dest: /home/ubuntu/gitea_deployment
         version: demo
         update: yes
+
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: set nginx
+      copy:
+        src: ../files/nginx.conf
+        dest: /etc/nginx/sites-available/nginx.conf
     
-    - name: container up
+    - name: apply nginx.config
+      file:
+        src: /etc/nginx/sites-available/nginx.conf
+        dest: /etc/nginx/sites-enabled/nginx.conf
+        state: link
+        
+    - name: container up (v2 - no hyphen)
       command: docker compose up -d #what to do
       args: #where
         chdir: /home/ubuntu/gitea_deployment
+
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
