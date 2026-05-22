@@ -1,0 +1,20 @@
+---
+- name: Install nginx
+  apt:
+    name: nginx
+    state: present
+
+- name: set nginx
+  copy:
+    src: nginx.conf
+    dest: /etc/nginx/sites-available/nginx.conf
+
+- name: apply nginx.config
+  file:
+    src: /etc/nginx/sites-available/nginx.conf
+    dest: /etc/nginx/sites-enabled/nginx.conf
+    state: link
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted

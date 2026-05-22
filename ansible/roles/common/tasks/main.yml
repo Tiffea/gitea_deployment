@@ -1,0 +1,5 @@
+---
+- name: Apt install packages
+  apt:
+    update_cache: yes
+    # we update cache so you don't need to write "update_cache: yes" for all the apps
