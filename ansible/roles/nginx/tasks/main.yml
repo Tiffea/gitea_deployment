@@ -4,6 +4,11 @@
     name: nginx
     state: present
 
+- name: delete default config of nginx
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
 - name: set nginx
   copy:
     src: nginx.conf
@@ -14,6 +19,7 @@
     src: /etc/nginx/sites-available/nginx.conf
     dest: /etc/nginx/sites-enabled/nginx.conf
     state: link
+
 - name: restart nginx
   service:
     name: nginx
