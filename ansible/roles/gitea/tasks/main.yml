@@ -1,0 +1,7 @@
+---
+- name: clone repository #warning you must have an actual version on main branch
+  git:
+    repo: https://github.com/tiffea/gitea_deployment.git
+    dest: /home/ubuntu/gitea_deployment
+    version: demo
+    update: yes

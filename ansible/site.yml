@@ -1,0 +1,21 @@
+---
+- name: setup gitea on a server
+  hosts: gitea_server 
+  become: true #sudo rights
+  roles:
+    - role: common
+      tags: common
+
+    - role: docker 
+      tags: docker
+
+    - role: nginx
+      tags: nginx
+
+    - role: gitea
+      tags: gitea
+
+    - role: nginx
+      tags: nginx
+
+    #one by one - order is necessary
