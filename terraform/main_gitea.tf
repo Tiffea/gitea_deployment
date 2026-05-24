@@ -88,3 +88,4 @@ resource "aws_key_pair" "gitea_key" {
 
 # you need to set required_providers and required_version - terraform
 #"~> 5.92" means 5.92 or higher up to 6.0
+#check pipeline is working
