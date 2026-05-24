@@ -1,0 +1,32 @@
+name: apply ansible changes to a server
+
+on:
+  push:
+    branches:
+      - demo
+
+#create clean ubuntu every time!!
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+
+      - name: chekout code
+        uses: actions/checkout@v3
+
+      - name: install ansible
+        run: |
+          pip install --upgrade pip
+          pip install ansible
+      
+      - name: setup ssh key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/gitea-key.pem
+          chmod 600 ~/.ssh/gitea-key.pem
+          ssh-keyscan -H ${{ secrets.SECRET_IP }} >> ~/.ssh/known_hosts
+
+      - name: deploy with ansible
+        run: |
+          ansible-playbook -i ansible/inventory.ini ansible/site.yml
