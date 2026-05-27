@@ -3,4 +3,4 @@
   cron:
     name: health check
     minute: 5
-    job: home/ubuntu/gitea_deployment/scripts/health_check.sh
+    job: home/ubuntu/gitea_deployment/scripts/files/health-check.sh
