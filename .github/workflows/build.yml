@@ -23,8 +23,8 @@ jobs:
       - name: setup ssh key
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/gitea-key.pem
-          chmod 600 ~/.ssh/gitea-key.pem
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/gitea_key
+          chmod 600 ~/.ssh/gitea_key
           ssh-keyscan -H "${{ secrets.SERVER_IP }}" >> ~/.ssh/known_hosts
 
       - name: deploy with ansible
