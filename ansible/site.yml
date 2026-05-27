@@ -17,5 +17,7 @@
 
     - role: nginx
       tags: nginx
-
+    
+    - role: scripts
+      tags: scripts
     #one by one - order is necessary

@@ -1,0 +1,6 @@
+---
+- name: scripts automation
+  cron:
+    name: health check
+    minute: 5
+    job: home/ubuntu/gitea_deployment/scripts/health_check.sh
