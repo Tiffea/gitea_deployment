@@ -1,6 +1,13 @@
 ---
+- name: copy script to a server
+  copy:
+    src: health_check.sh #bc it's 
+    dest: /usr/local/bin/health_check.sh #for admin files
+    mode: '0755'
+
 - name: scripts automation
+  become: true
   cron:
     name: health check
     minute: "*/5"
-    job: /home/ubuntu/gitea_deployment/scripts/files/health_check.sh
+    job: "/usr/local/bin/health_check.sh >> /var/log/health_check.log 2>&1"
