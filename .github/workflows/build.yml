@@ -20,7 +20,7 @@ jobs:
           pip install --upgrade pip
           pip install ansible
       
-      - name: setup ssh key
+      - name: setup ssh key for snsible actions
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/gitea_key
@@ -28,5 +28,6 @@ jobs:
           ssh-keyscan -H "${{ secrets.SERVER_IP }}" >> ~/.ssh/known_hosts
 
       - name: deploy with ansible
+        working-directory: ansible
         run: |
-          ansible-playbook -i ansible/inventory.ini ansible/site.yml
+          ansible-playbook -i inventory.ini site.yml

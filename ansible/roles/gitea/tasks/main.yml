@@ -1,5 +1,5 @@
 ---
   - name: copy compose file
     copy:
-      src: /Users/yangolovatenko/Studying/gitea_deployment/docker-compose.yml
+      src: docker-compose.yml
       dest: /home/ubuntu/gitea_deployment
